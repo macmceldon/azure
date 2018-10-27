@@ -68,7 +68,7 @@ Select-AzureRmSubscription -Subscription $subscription_id
 
 
 # Create a new directory with the subscription name
-$path_to_store_inventory_csv_files = "c:\AzureInventory\" + $subscription_id
+$path_to_store_inventory_csv_files = "https://cs28e2b803fef35x4093x97e.file.core.windows.net/output/" + $subscription_id
 
 
 # Fetch the Virtual Machines from the subscription

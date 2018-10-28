@@ -138,6 +138,32 @@
             "tags": {
                 "ICTO": "XYZ123"
             }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "config-app",
+            "apiVersion": "2017-03-30",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
+            ],
+            "tags": {
+                "displayName": "config-app"
+              },
+            "properties": {
+              "publisher": "Microsoft.Azure.Extensions",
+              "type": "CustomScript",
+              "typeHandlerVersion": "2.0",
+              "autoUpgradeMinorVersion": true,
+              "settings": {
+                "fileUris": "https://salabops01.file.core.windows.net/sfs-lab-ops/VmCustomScripts/configrhel.sh",
+                "commandToExecute": "sh configrhel.sh"
+              },
+              "protectedSettings": {
+                "storageAccountName": "NULL",
+                "storageAccountKey": "NULL"
+              }
+            }
         }
     ],
     "outputs": {

@@ -11,6 +11,8 @@ https://docs.microsoft.com/en-us/azure/cloud-shell/persisting-shell-storage
 
 https://www.ssh.com/ssh/putty/mac/
 
+https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/201-customscript-extension-azure-storage-on-ubuntu/azuredeploy.json
+
 
 
 

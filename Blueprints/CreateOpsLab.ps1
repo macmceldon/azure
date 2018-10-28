@@ -99,11 +99,11 @@ function ConfigureVnetFirewalls($vnet,$rg){
 function CleanUp(){
     #$lockId = (Get-AzureRmResourceLock -ResourceGroupName $rgNet -ResourceName LockNetworkResourceGroup -ResourceType Microsoft.Authorization/locks).LockId
     #Remove-AzureRmResourceLock -LockId $lockId
-    Remove-AzureRmResourceGroup -Name $rgNet -Force -Verbose
     Remove-AzureRmResourceGroup -Name $rgQa -Force -Verbose
     Remove-AzureRmResourceGroup -Name $rgDev -Force -Verbose
     Remove-AzureRmResourceGroup -Name $rgProd -Force -Verbose
     Remove-AzureRmResourceGroup -Name $rgOps -Force -Verbose
+    Remove-AzureRmResourceGroup -Name $rgNet -Force -Verbose
 }
 function LockResourceGroups{
     # https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-lock-resources

@@ -141,15 +141,12 @@
         },
         {
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "config-app",
+            "name": "[concat(parameters('virtualMachineName'),'/','extensions')]",
             "apiVersion": "2017-03-30",
-            "location": "[resourceGroup().location]",
+            "location": "[parameters('location')]",
             "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
+              "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName'))]"
             ],
-            "tags": {
-                "displayName": "config-app"
-              },
             "properties": {
               "publisher": "Microsoft.Azure.Extensions",
               "type": "CustomScript",
@@ -160,8 +157,8 @@
                 "commandToExecute": "sh configrhel.sh"
               },
               "protectedSettings": {
-                "storageAccountName": "NULL",
-                "storageAccountKey": "NULL"
+                "storageAccountName": "null",
+                "storageAccountKey": "null"
               }
             }
         }

@@ -1,0 +1,51 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "eastus2"
+        },
+        "networkInterfaceName": {
+            "value": "vm-lab-rhel01457"
+        },
+        "networkSecurityGroupName": {
+            "value": "vm-lab-rhel01-nsg"
+        },
+        "networkSecurityGroupRules": {
+            "value": []
+        },
+        "virtualNetworkId": {
+            "value": "/subscriptions/8e2b803f-ef35-4093-97e0-b190a9680de3/resourceGroups/rg-lab-net/providers/Microsoft.Network/virtualNetworks/vnet-lab-dev"
+        },
+        "subnetName": {
+            "value": "snet-frontend"
+        },
+        "publicIpAddressName": {
+            "value": "vm-lab-rhel01-ip"
+        },
+        "publicIpAddressType": {
+            "value": "Dynamic"
+        },
+        "publicIpAddressSku": {
+            "value": "Basic"
+        },
+        "virtualMachineName": {
+            "value": "vm-lab-rhel01"
+        },
+        "virtualMachineRG": {
+            "value": "rg-lab-dev"
+        },
+        "osDiskType": {
+            "value": "Standard_LRS"
+        },
+        "virtualMachineSize": {
+            "value": "Standard_D1"
+        },
+        "adminUsername": {
+            "value": "mceldon"
+        },
+        "adminPublicKey": {
+            "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8ukRm+9cbE8PfloFXenvj/jrqPThXYWZtG02Glm2e0fdRORDJdfjuX7wnyC5uuDuvo3rE03WXSC1oOE/HFvHM3Q4O3U4R8yj7I/vZem5DNwpHPVKqEobEPUnwTBVXQW0zL9nJWAODOXmEykH4JuulOqQ9BT0EiNNI/P62Hz8mdr6gWpN0IDUXbNY8FeH4qD9yXYaps1iXw0jYwzYidDYRn4kMHF5zyrH3BbnsfFMCLIjNrqoHM6c6wdatXKGeWumAOcKErRllp0J81EBpPSnv3PS2sByuyier8jerrUseTtf5w3nPuJTW9fVl8Eb72OcmBaRPfChZQDXIvLl98UKt macmc@DESKTOP-3D3SJ0U"
+        }
+    }
+}

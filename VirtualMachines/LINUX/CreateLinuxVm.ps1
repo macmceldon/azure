@@ -5,7 +5,7 @@
 #region ## PARAMS ##
 param(
  [string]
- $resourceGroupName = "rg-lab-qa",
+ $resourceGroupName = "rg-lab-dev",
 
  [string]
  $templateFilePath = "template.noscript.json",

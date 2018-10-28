@@ -151,6 +151,14 @@ function CreateOpsFileResources(){
 #endregion
 
 #region ## EXECUTION ##
+
+# Step 1. Create Resource Groups
+CreateResourceGroups
+# Step 2. Create Vnets in Network Resource Group
+CreateVnets
+# Step 3. Create Ops Template File Repository
+CreateOpsFileResources
+
 ConfigureVnetFirewalls -vnet 'vnet-lab-dev' -rg 'rg-lab-net'
 Write-Output("SCRIPT COMPLETE")
 #endregion

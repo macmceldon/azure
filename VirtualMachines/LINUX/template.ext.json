@@ -156,11 +156,8 @@
               "typeHandlerVersion": "2.0",
               "autoUpgradeMinorVersion": true,
               "settings": {     
-                "skipDos2Unix": false   
-              },
-              "protectedSettings": {
-                "commandToExecute": "cat configrhel.sh | base64 -w0",
-                 "fileUris": ["https://salabops01.blob.core.windows.net/vmscripts/configrhel.sh"]  
+                "commandToExecute": "sudo sh configrhel.sh",
+                "fileUris": ["https://salabops01.blob.core.windows.net/vmscripts/configrhel.sh"]   
               }
             }
           }

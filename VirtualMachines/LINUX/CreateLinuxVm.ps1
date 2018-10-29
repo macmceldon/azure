@@ -8,7 +8,7 @@ param(
  $resourceGroupName = "rg-lab-dev",
 
  [string]
- $templateFilePath = "template.ext.json",
+ $templateFilePath = "template.noip.json",
 
  [string]
  $parametersFilePath = "parameters.json"

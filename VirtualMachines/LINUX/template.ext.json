@@ -157,7 +157,7 @@
               "autoUpgradeMinorVersion": true,
               "settings": {     
                 "commandToExecute": "sudo sh configrhel.sh",
-                "fileUris": ["https://salabops01.blob.core.windows.net/vmscripts/configrhel.sh"]   
+                "fileUris": ["https://salabops01.blob.core.windows.net/buildartifacts/configrhel.sh"]   
               }
             }
           }

@@ -6,13 +6,13 @@
             "value": "rg-lab-dev"
         },
         "virtualMachineName": {
-        "value": "vm-lab-rhel08"
+        "value": "vm-lab-rhel01"
         },
         "networkInterfaceName": {
-            "value": "nic-lab-rhel08"
+            "value": "nic-lab-rhel01"
         },
         "publicIpAddressName": {
-            "value": "pip-lab-rhel08"
+            "value": "pip-lab-rhel01"
         },
         "location": {
             "value": "eastus2"

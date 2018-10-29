@@ -14,6 +14,7 @@ Write-Output("SCRIPT START")
     $saOps = "salabops01"
     $sfsOps = "sfs-lab-ops"
     $vnetDevName = "vnet-lab-dev"
+    $pathToRhelScript = "C:\VS\azure\VirtualMachines\LINUX\configrhel.sh"
 #endregion
 
 #region ## FUNCTIONS ##
@@ -126,8 +127,10 @@ function CreateOpsFileResources(){
         -Kind Storage
     }
 
+    $ctx = $storageAccount.Context
+
     # Create File Share
-    # https://salabops01.file.core.windows.net/
+    <# https://salabops01.file.core.windows.net/
     New-AzureStorageShare `
     -Name $sfsOps `
     -Context $storageAccount.Context
@@ -141,8 +144,18 @@ function CreateOpsFileResources(){
     -Context $storageAccount.Context `
     -ShareName $sfsOps `
     -Path "ResourceTemplates"
+    #>
+
+    # Create Containers
+    $containerName = 'buildartifacts'
+    #New-AzureStorageContainer -Name $containerName -Context $ctx -Permission blob
 
     # Upload files to FileShare
+    # upload a file
+    Set-AzureStorageBlobContent -File $pathToRhelScript `
+    -Container $containerName `
+    -Blob "configrhel.sh" `
+    -Context $ctx
     # WIN Template
     # Linux Template
     # Lnux Sciprt
@@ -153,12 +166,13 @@ function CreateOpsFileResources(){
 #region ## EXECUTION ##
 
 # Step 1. Create Resource Groups
-CreateResourceGroups
+#CreateResourceGroups
 # Step 2. Create Vnets in Network Resource Group
 CreateVnets
-# Step 3. Create Ops Template File Repository
-CreateOpsFileResources
-
+# Step 3. COnfigure Vnets for SSH and HTTP
 ConfigureVnetFirewalls -vnet 'vnet-lab-dev' -rg 'rg-lab-net'
+# Step 4. Create Ops Template File Repository
+#CreateOpsFileResources
+#CleanUp
 Write-Output("SCRIPT COMPLETE")
 #endregion

@@ -140,12 +140,12 @@
             }
         },
         {
-            "name": "[concat('extensions/', parameters('virtualMachineName'))]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(parameters('virtualMachineName'),'/','extensions')]",
             "location": "[resourceGroup().location]",
-            "apiVersion": "2015-06-15",
+            "apiVersion": "2017-03-30",
             "dependsOn": [
-                "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName'))]"
+                "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
             ],
             "tags": {
               "displayName": "config-app"
@@ -155,10 +155,11 @@
               "type": "CustomScript",
               "typeHandlerVersion": "2.0",
               "autoUpgradeMinorVersion": true,
-              "settings": {        
+              "settings": {     
+                "skipDos2Unix": false   
               },
               "protectedSettings": {
-                 "script": "configrhel.sh",
+                "commandToExecute": "cat configrhel.sh | base64 -w0",
                  "fileUris": ["https://salabops01.blob.core.windows.net/vmscripts/configrhel.sh"]  
               }
             }

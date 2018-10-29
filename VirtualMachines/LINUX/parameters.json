@@ -2,33 +2,33 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "location": {
-            "value": "eastus2"
+        "virtualMachineRG": {
+            "value": "rg-lab-dev"
+        },
+        "virtualMachineName": {
+        "value": "vm-lab-rhel01"
         },
         "networkInterfaceName": {
-            "value": "vm-lab-rhel03"
+            "value": "nic-lab-rhel01"
         },
+        "publicIpAddressName": {
+            "value": "pip-lab-rhel01"
+        },
+        "location": {
+            "value": "eastus2"
+        },        
         "virtualNetworkId": {
             "value": "/subscriptions/8e2b803f-ef35-4093-97e0-b190a9680de3/resourceGroups/rg-lab-net/providers/Microsoft.Network/virtualNetworks/vnet-lab-dev"
         },
         "subnetName": {
             "value": "snet-frontend"
-        },
-        "publicIpAddressName": {
-            "value": "vm-lab-rhel03-ip"
-        },
+        },        
         "publicIpAddressType": {
             "value": "Dynamic"
         },
         "publicIpAddressSku": {
             "value": "Basic"
-        },
-        "virtualMachineName": {
-            "value": "vm-lab-rhel03"
-        },
-        "virtualMachineRG": {
-            "value": "rg-lab-dev"
-        },
+        },        
         "osDiskType": {
             "value": "Standard_LRS"
         },

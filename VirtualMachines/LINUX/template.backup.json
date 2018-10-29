@@ -43,6 +43,7 @@
         }
     },
     "variables": {
+        "nsgId": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]",
         "vnetId": "[parameters('virtualNetworkId')]",
         "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]"
     },
@@ -53,6 +54,7 @@
             "apiVersion": "2018-04-01",
             "location": "[parameters('location')]",
             "dependsOn": [
+                "[concat('Microsoft.Network/networkSecurityGroups/', parameters('networkSecurityGroupName'))]",
                 "[concat('Microsoft.Network/publicIpAddresses/', parameters('publicIpAddressName'))]"
             ],
             "properties": {
@@ -69,7 +71,20 @@
                             }
                         }
                     }
-                ]
+                ],
+                "networkSecurityGroup": {
+                    "id": "[variables('nsgId')]"
+                }
+            },
+            "tags": {}
+        },
+        {
+            "name": "[parameters('networkSecurityGroupName')]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2018-08-01",
+            "location": "[parameters('location')]",
+            "properties": {
+                "securityRules": "[parameters('networkSecurityGroupRules')]"
             },
             "tags": {}
         },
@@ -140,27 +155,32 @@
             }
         },
         {
-            "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(parameters('virtualMachineName'),'/','extensions')]",
-            "apiVersion": "2017-03-30",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-              "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName'))]"
-            ],
+            "name": "microsoft.custom-script-linux-20181028065132",
+            "apiVersion": "2015-01-01",
+            "type": "Microsoft.Resources/deployments",
             "properties": {
-              "publisher": "Microsoft.Azure.Extensions",
-              "type": "CustomScript",
-              "typeHandlerVersion": "2.0",
-              "autoUpgradeMinorVersion": true,
-              "settings": {
-                "fileUris": "https://salabops01.file.core.windows.net/sfs-lab-ops/VmCustomScripts/configrhel.sh",
-                "commandToExecute": "sh configrhel.sh"
-              },
-              "protectedSettings": {
-                "storageAccountName": "null",
-                "storageAccountKey": "null"
-              }
-            }
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "https://gallery.azure.com/artifact/20161101/microsoft.custom-script-linux-arm.2.0.50/Artifacts/MainTemplate.json"
+                },
+                "parameters": {
+                    "vmName": {
+                        "value": "vm-lab-rhel01"
+                    },
+                    "location": {
+                        "value": "eastus2"
+                    },
+                    "fileUris": {
+                        "value": []
+                    },
+                    "commandToExecute": {
+                        "value": "sh script.sh"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
+            ]
         }
     ],
     "outputs": {

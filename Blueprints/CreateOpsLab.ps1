@@ -4,6 +4,7 @@
 Clear-Host
 Write-Output("SCRIPT START")
 #region ## PARAMS ##
+
     Clear-Host
     $location = "eastus2"
     $rgOps = "rg-lab-ops"

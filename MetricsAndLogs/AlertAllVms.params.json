@@ -1,0 +1,42 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "alertName": {
+            "value": "Multi-resource sub level metric alert via Azure Resource Manager template"
+        },
+        "alertDescription": {
+            "value": "New Multi-resource sub level metric alert created via template"
+        },
+        "alertSeverity": {
+            "value":3
+        },
+        "isEnabled": {
+            "value": true
+        },
+        "targetSubscription":{
+            "value": "/subscriptions/8e2b803f-ef35-4093-97e0-b190a9680de3"
+        },
+        "targetResourceRegion":{
+            "value": "EastUS2"
+        },
+        "targetResourceType":{
+            "value": "Microsoft.Compute/virtualMachines"
+        },        
+        "metricName": {
+            "value": "Percentage CPU"
+        },
+        "operator": {
+          "value": "GreaterThan"
+        },
+        "threshold": {
+            "value": "1"
+        },
+        "timeAggregation": {
+            "value": "Average"
+        },
+        "actionGroupId": {
+            "value": "/subscriptions/8e2b803f-ef35-4093-97e0-b190a9680de3/resourceGroups/rg-lab-hdcs/providers/microsoft.insights/actionGroups/NotifyHdcs"
+        }
+    }
+}

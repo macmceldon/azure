@@ -3,7 +3,6 @@
 	Deploy Resource Groups & Virtual Networks
 #>
 Clear-Host
-Write-Output("SCRIPT START")
 #region ## PARAMS ##
 	Clear-Host
 	$location = 'eastus2'
@@ -86,10 +85,11 @@ function CleanUp(){
 #endregion
 
 #region ## EXECUTION ##
+"SCRIPT START"
 # Step 1. Create Resource Groups
 CreateResourceGroups
 # Step 2. Create Vnets in Network Resource Group
 CreateVnets
 #CleanUp
-Write-Output("SCRIPT COMPLETE")
+"SCRIPT COMPLETE"
 #endregion

@@ -5,29 +5,14 @@
         "location": {
             "value": "eastus2"
         },
-        "networkInterfaceName": {
-            "value": "rhel-lab-01328"
-        },
         "subnetName": {
             "value": "snet-frontend"
         },
         "virtualNetworkId": {
             "value": "/subscriptions/8e2b803f-ef35-4093-97e0-b190a9680de3/resourceGroups/rg-lab-net/providers/Microsoft.Network/virtualNetworks/vnet-lab-dev"
         },
-        "publicIpAddressName": {
-            "value": "rhel-lab-01-ip"
-        },
-        "publicIpAddressType": {
-            "value": "Dynamic"
-        },
-        "publicIpAddressSku": {
-            "value": "Basic"
-        },
         "virtualMachineName": {
             "value": "rhel-lab-01"
-        },
-        "virtualMachineRG": {
-            "value": "rg-lab-dev"
         },
         "osDiskType": {
             "value": "StandardSSD_LRS"

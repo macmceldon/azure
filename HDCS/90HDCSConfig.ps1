@@ -17,9 +17,18 @@ function CreateVm(){
 	Get-AzureRmVirtualNetwork -Name $vnetDev -ResourceGroupName $rgNet
 	$securePassword = ConvertTo-SecureString 'P@ssword!' -AsPlainText -Force
 
- 	New-AzureRmResourceGroupDeployment -ResourceGroupName $rgDev -Name 'deploy' `
+	$ipSuffix = GetRandom;
+	$ipSuffix = 'vm-ip-' + $ipSuffix
+
+ 	New-AzureRmResourceGroupDeployment -ResourceGroupName $rgDev `
 	-TemplateFile $deployVmTemplateFilePath -TemplateParameterFile $deployVmParamFilePath `
-	-adminPassword $securePassword -virtualMachineName 'rhel-lab-noip'
+	-adminPassword $securePassword -virtualMachineName 'rhel-lab-noip' `
+	-networkInterfaceName $ipSuffix
+}
+
+function GetRandom(){
+	$guid = ([guid]::NewGuid()).tostring()
+	return $guid.Substring(0,8)
 }
 function CleanUp(){
 	#$alert = 
@@ -29,6 +38,7 @@ function CleanUp(){
 #region ## EXECUTION ##
 "SCRIPT START"
 # Step 1. Create VM
+#GetRandom
 CreateVm
 #CleanUp
 "SCRIPT COMPLETE"

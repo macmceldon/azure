@@ -47,7 +47,7 @@ function CleanUp(){
 #region ## EXECUTION ##
 "SCRIPT START"
 # Step 1. Create Action Group
-#CreateActionGroup
+CreateActionGroup
 # Step 2. Create Alert Rule
 # CreateAlertRuleForSubscription
 # Step 3. Deploy Log Analytics Workspace

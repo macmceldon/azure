@@ -3,6 +3,9 @@ Clear-Host
 
 Update-Module -Name AzureRm
 
+#https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-manager-supported-services
+Get-AzureRmResourceProvider -ListAvailable | Select-Object ProviderNamespace, RegistrationState
+Get-AzureRmResourceProvider -ProviderNamespace Microsoft.SiteRecovery
 function Uninstall-AllModules {
     param(
       [Parameter(Mandatory=$true)]

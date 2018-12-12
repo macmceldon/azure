@@ -48,7 +48,7 @@
             "value": "DefaultPolicy"
         },
         "backupItemName": {
-            "value": "vm;iaasvmcontainerv2;rg-lab-dev;rhel-me"
+            "value": "vm;iaasvmcontainerv2;rg-lab-dev;rhel-xx"
         }
     }
 }

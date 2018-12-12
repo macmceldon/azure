@@ -7,23 +7,26 @@ Clear-Host
 	Clear-Host
 	$deployVmParamFilePath = 'HDCS\ARM\rhel.params.json'
 	$deployVmTemplateFilePath = 'HDCS\ARM\rhel.template.json'
-	$vnetDev = 'vnet-lab-dev'
+	$vnetTarget = 'vnet-lab-dev'
     $rgNet = 'rg-lab-net'
-    $rgDev = 'rg-lab-dev'
+	$rgTarget = 'rg-lab-dev'
+	$vmName = 'rhel-10'
 #endregion
 
 #region ## FUNCTIONS ##
 function CreateVm(){
-	Get-AzureRmVirtualNetwork -Name $vnetDev -ResourceGroupName $rgNet
+	Get-AzureRmVirtualNetwork -Name $vnetTarget -ResourceGroupName $rgNet
 	$securePassword = ConvertTo-SecureString 'P@ssword!' -AsPlainText -Force
 
 	$ipSuffix = GetRandom;
 	$ipSuffix = 'vm-ip-' + $ipSuffix
 
+	$backupItemName = 'vm;iaasvmcontainerv2;' + $rgTarget + ';' + $vmName
+
  	New-AzureRmResourceGroupDeployment -ResourceGroupName $rgDev `
 	-TemplateFile $deployVmTemplateFilePath -TemplateParameterFile $deployVmParamFilePath `
-	-adminPassword $securePassword -virtualMachineName 'rhel-lab-noip' `
-	-networkInterfaceName $ipSuffix
+	-adminPassword $securePassword -virtualMachineName $vmName `
+	-networkInterfaceName $ipSuffix -backupItemName $backupItemName
 }
 
 function GetRandom(){

@@ -3,7 +3,6 @@
 	Deploy HDCS Baseline Resources
 #>
 Clear-Host
-Write-Output("SCRIPT START")
 #region ## PARAMS ##
 	Clear-Host
 	$location = 'eastus2'
@@ -14,40 +13,46 @@ Write-Output("SCRIPT START")
 #region ## FUNCTIONS ##
 function CreateStorageAccounts(){
     
+    $exists = Get-AzureRmStorageAccount -ResourceGroupName $rgHdcs `
+    -Name $storHdcs -ErrorAction SilentlyContinue
     # Create Storage Account
-    $storageAccount = Get-AzureRmStorageAccount -Name $storHdcs -ResourceGroupName $rgHdcs
-
-    if(!$storageAccount){
+    if(!$exists)
+    {
         $storageAccount = New-AzureRmStorageAccount -ResourceGroupName $rgHdcs `
         -Name $storHdcs `
         -Location $location `
         -SkuName Standard_LRS `
-        -Kind Storage
-    }
+        -Kind Storage -ErrorAction SilentlyContinue
 
-	$ctx = $storageAccount.Context
+        $ctx = $storageAccount.Context
 	
-    # Create Containers
-    $containerName = 'hdcs-assets'
-    New-AzureStorageContainer -Name $containerName -Context $ctx -Permission blob
-
+        # Create Containers
+        $containerName = 'hdcs-assets'
+        New-AzureStorageContainer -Name $containerName -Context $ctx -Permission blob
+    } 
+    else
+    {
+        "Storage Account Already Exists - Please Check"
+    }
+    
     # Upload files to FileShare
     # upload a file
     #Set-AzureStorageBlobContent -File $pathToAsset -Container $containerName -Blob "configrhel.sh" -Context $ctx
 }
 
 function CleanUp(){
-	$storageAccount = Get-AzureRmStorageAccount -Name $storHdcs -ResourceGroupName $rgHdcs -ErrorAction SilentlyContinue
-
-    if($storageAccount){
+	$exists = Get-AzureRmStorageAccount -Name $storHdcs -ResourceGroupName $rgHdcs -ErrorAction SilentlyContinue
+    if($exists){
+        "Removing Storage Account"
         Remove-AzureRmStorageAccount -Name $storHdcs -ResourceGroupName $rgHdcs -Force -Verbose
     }
 }
 #endregion
 
 #region ## EXECUTION ##
+"SCRIPT START"
 # Step 1. Create Storage Accounts
 CreateStorageAccounts
 #CleanUp
-Write-Output("SCRIPT COMPLETE")
+"SCRIPT COMPLETE"
 #endregion

@@ -36,7 +36,6 @@ function CreateResourceGroups() {
 		}
 	}
 }
-
 function CreateVnets(){
 
 	# UAT #
@@ -74,12 +73,17 @@ function CreateVnets(){
 
     Write-Output("CreateVnets Done")
 }
-
 function CleanUp(){
-	$rgCollection = $rgHdcs,$rgNet,$rgDev,$rgUat,$rgProd
+	#$rgDev,$rgUat,$rgProd,$rgHdcs,$rgNet
+	$rgCollection = $rgDev,$rgUat,$rgProd,$rgHdcs
 	foreach($rg in $rgCollection)
 	{
-		Remove-AzureRmResourceGroup -Name $rg -Force -Verbose	
+		$exists = Get-AzureRmResourceGroup -Name $rg -ErrorAction SilentlyContinue
+		if($exists)
+		{
+			"Removing: " + $rg
+			Remove-AzureRmResourceGroup -Name $rg -Force -Verbose
+		}			
 	}
 }
 #endregion

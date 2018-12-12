@@ -1,13 +1,15 @@
 <#
     HDCS Operational Lab Environment
-	Deploy Logging & Monitoring 
+	Create Action Alert Group
+	Create Action Alert 
 #>
 Clear-Host
 Write-Output("SCRIPT START")
 #region ## PARAMS ##
 	Clear-Host
-	$parametersFilePath = 'MetricsAndLogs\AlertAllVms.params.json'
-	$templateFilePath = 'MetricsAndLogs\AlertAllVms.json'
+	$deployAlertParamFilePath = 'MetricsAndLogs\AlertAllVms.params.json'
+	$deployAlertTemplateFilePath = 'MetricsAndLogs\AlertAllVms.json'
+	$deployLogAnalyticsTemplatePath = 'MetricsAndLogs\LogAnalyticsWSpace.json'
 	$rgHdcs = 'rg-lab-hdcs'
 #endregion
 
@@ -21,8 +23,14 @@ function CreateActionGroup(){
 function CreateAlertRuleForSubscription(){
 	$actionGroup = Get-AzureRmActionGroup -ResourceGroupName $rgHdcs -Name 'AlertHdcs'
 	$subId = '/subscriptions/' + (Get-AzureRmSubscription).Id
-	New-AzureRmResourceGroupDeployment -ResourceGroupName $rgHdcs -TemplateFile $templateFilePath -TemplateParameterFile $parametersFilePath `
+	New-AzureRmResourceGroupDeployment -ResourceGroupName $rgHdcs `
+	-TemplateFile $deployAlertTemplateFilePath -TemplateParameterFile $deployAlertParamFilePath `
 	-targetSubscription $subId -actionGroupId $actionGroup.Id
+}
+
+function DeployLogAnalyticsWorkspace(){
+	New-AzureRmResourceGroupDeployment -Name 'workloadLogAnalytics' -ResourceGroupName $rgHdcs `
+	-TemplateFile $deployLogAnalyticsTemplatePath -workspaceName 'workloadLogAnalytics'
 }
 
 function CleanUp(){
@@ -32,9 +40,11 @@ function CleanUp(){
 
 #region ## EXECUTION ##
 # Step 1. Create Action Group
-CreateActionGroup
+#CreateActionGroup
 # Step 2. Create Alert Rule
 CreateAlertRuleForSubscription
+# Step 3. OPTIONAL - Deploy Log Analytics Workspace
+#DeployLogAnalyticsWorkspace
 #CleanUp
 Write-Output("SCRIPT COMPLETE")
 #endregion

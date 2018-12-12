@@ -5,6 +5,9 @@
         "location": {
             "value": "eastus2"
         },
+        "networkInterfaceName": {
+            "value": "rhel-me730"
+        },
         "subnetName": {
             "value": "snet-frontend"
         },
@@ -12,7 +15,10 @@
             "value": "/subscriptions/8e2b803f-ef35-4093-97e0-b190a9680de3/resourceGroups/rg-lab-net/providers/Microsoft.Network/virtualNetworks/vnet-lab-dev"
         },
         "virtualMachineName": {
-            "value": "rhel-lab-01"
+            "value": "rhel-me"
+        },
+        "virtualMachineRG": {
+            "value": "rg-lab-dev"
         },
         "osDiskType": {
             "value": "StandardSSD_LRS"
@@ -22,6 +28,27 @@
         },
         "adminUsername": {
             "value": "mceldon"
+        },
+        "adminPassword": {
+            "value": null
+        },
+        "backupVaultName": {
+            "value": "hdcsRSVault"
+        },
+        "backupFabricName": {
+            "value": "Azure"
+        },
+        "backupVaultRGName": {
+            "value": "rg-lab-hdcs"
+        },
+        "backupVaultRGIsNew": {
+            "value": false
+        },
+        "backupPolicyName": {
+            "value": "DefaultPolicy"
+        },
+        "backupItemName": {
+            "value": "vm;iaasvmcontainerv2;rg-lab-dev;rhel-me"
         }
     }
 }

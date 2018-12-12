@@ -17,6 +17,9 @@
         "virtualMachineName": {
             "type": "string"
         },
+        "virtualMachineRG": {
+            "type": "string"
+        },
         "osDiskType": {
             "type": "string"
         },
@@ -28,6 +31,24 @@
         },
         "adminPassword": {
             "type": "secureString"
+        },
+        "backupVaultName": {
+            "type": "string"
+        },
+        "backupFabricName": {
+            "type": "string"
+        },
+        "backupVaultRGName": {
+            "type": "string"
+        },
+        "backupVaultRGIsNew": {
+            "type": "bool"
+        },
+        "backupPolicyName": {
+            "type": "string"
+        },
+        "backupItemName": {
+            "type": "string"
         }
     },
     "variables": {
@@ -40,8 +61,7 @@
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2018-04-01",
             "location": "[parameters('location')]",
-            "dependsOn": [                
-            ],
+            "dependsOn": [],
             "properties": {
                 "ipConfigurations": [
                     {
@@ -55,7 +75,10 @@
                     }
                 ]
             },
-            "tags": {}
+            "tags": {
+                "ICTO": "123456",
+                "CUSTOMTAG": "IAMATAG"
+            }
         },
         {
             "name": "[parameters('virtualMachineName')]",
@@ -96,7 +119,39 @@
                     "adminPassword": "[parameters('adminPassword')]"
                 }
             },
-            "tags": {}
+            "tags": {
+                "ICTO": "123456",
+                "CUSTOMTAG": "IAMATAG"
+            }
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "[concat(parameters('virtualMachineName'), '-' , 'BackupIntent')]",
+            "type": "Microsoft.Resources/deployments",
+            "resourceGroup": "[parameters('backupVaultRGName')]",
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "name": "[concat(parameters('backupVaultName'), '/', parameters('backupFabricName'), '/', parameters('backupItemName'))]",
+                            "apiVersion": "2017-07-01",
+                            "type": "Microsoft.RecoveryServices/vaults/backupFabrics/backupProtectionIntent",
+                            "properties": {
+                                "friendlyName": "[concat(parameters('virtualMachineName'), 'BackupIntent')]",
+                                "protectionIntentItemType": "AzureResourceItem",
+                                "policyId": "[resourceId(parameters('backupVaultRGName'), 'Microsoft.RecoveryServices/vaults/backupPolicies', parameters('backupVaultName'), parameters('backupPolicyName'))]",
+                                "sourceResourceId": "[resourceId(parameters('virtualMachineRG'), 'Microsoft.Compute/virtualMachines', parameters('virtualMachineName'))]"
+                            }
+                        }
+                    ]
+                }
+            },
+            "dependsOn": [
+                "[resourceId(parameters('virtualMachineRG'), 'Microsoft.Compute/virtualMachines', parameters('virtualMachineName'))]"
+            ]
         }
     ],
     "outputs": {

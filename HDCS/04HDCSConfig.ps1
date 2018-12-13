@@ -1,38 +1,48 @@
 <#
     HDCS Operational Lab Environment
 	Deploy Policies
- 	#https://docs.microsoft.com/en-us/azure/governance/policy/assign-policy-powershell
+	 #https://docs.microsoft.com/en-us/azure/governance/policy/assign-policy-powershell
+	 #https://docs.microsoft.com/en-us/powershell/module/azurerm.resources/new-azurermpolicydefinition?view=azurermps-6.13.0
 #>
 Clear-Host
 #region ## PARAMS ##
 	Clear-Host
 	$location = 'eastus2'
-	#$PolicyParamFilePath = 'MetricsAndLogs\AlertAllVms.params.json'
-	$PolicyTemplateFilePath = 'HDCS\Policies\01RestrictVmSku.json'
 	$rgHdcs = 'rg-lab-hdcs'
+	$subId = '/subscriptions/' + (Get-AzureRmSubscription).Id
 #endregion
 
 #region ## FUNCTIONS ##
-function DeployPolicies{
-	
+function AssignPolicyFromExisting{
 	$policyName = 'Allowed virtual machine SKUs'
-	$subId = '/subscriptions/' + (Get-AzureRmSubscription).Id
 	$policyDefinition = Get-AzureRmPolicyDefinition -Id '/providers/Microsoft.Authorization/policyDefinitions/cccc23c7-8427-4f53-ad12-b6a63eb452b3'
-	
-	#$definition = Get-AzureRmPolicyDefinition | Where-Object { $_.Name -eq 'Allowed virtual machine SKUs' }
 	New-AzureRmPolicyAssignment -Name 'restrict-vm-sku' -DisplayName $policyName -Scope $subId `
 	-PolicyDefinition $policyDefinition -listOfAllowedSKUs 'Standard_D1','Standard_D2'
 }
+function DefineHdcsPolicies{
+	New-AzureRmPolicyDefinition -Name '01RestrictVmSelectPolicy' `
+	-Description 'Restrict VM Selections' -Policy 'HDCS\Policies\01RestrictVmSelect.json' `
+	-Metadata '{"Category":"Virtual Machine"}'
+}
+
+function GetListOfPolicyDefinitions{
+	$policyDefinitions = Get-AzureRmPolicyDefinition
+	$policyDefinitions | Select-Object -Property {$_.Properties.displayName}, ResourceId, `
+	{$_.Properties.description} #| Export-Csv -Path C:\vs\azure\policies.csv
+}
+
 
 function CleanUp(){
-	#$alert = 
+	"REMOVING POLICY ASSIGNMENTS"
+	Remove-AzureRmPolicyDefinition -Name '01RestrictVmSelectPolicy' -Force
 }
 #endregion
 
 #region ## EXECUTION ##
 "SCRIPT START"
 # Step 1. Create Action Group
-DeployPolicies
+#DeployPolicies
 #CleanUp
+DefineHdcsPolicies
 "SCRIPT COMPLETE"
 #endregion

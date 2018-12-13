@@ -24,7 +24,7 @@
             "value": "StandardSSD_LRS"
         },
         "virtualMachineSize": {
-            "value": "Standard_A1_v2"
+            "value": "Standard_D2_v3"
         },
         "adminUsername": {
             "value": "mceldon"

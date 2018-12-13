@@ -31,6 +31,12 @@
                 "2016-Datacenter",
                 "7.4"
               ]
+            },
+            {
+              "field": "Microsoft.Compute/VirtualMachines/sku.name",
+              "in": [
+                  "Standard_D2_v3"
+              ]
             }
           ]
         }

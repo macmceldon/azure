@@ -19,10 +19,10 @@ function AssignPolicyFromExisting{
 	New-AzureRmPolicyAssignment -Name 'restrict-vm-sku' -DisplayName $policyName -Scope $subId `
 	-PolicyDefinition $policyDefinition -listOfAllowedSKUs 'Standard_D1','Standard_D2'
 }
-function DefineHdcsPolicies{
-	New-AzureRmPolicyDefinition -Name '01RestrictVmSelectPolicy' `
-	-Description 'Restrict VM Selections' -Policy 'HDCS\Policies\01RestrictVmSelect.json' `
-	-Metadata '{"Category":"Virtual Machine"}'
+function DefineAndAssignHdcsPolicies{
+	$policy = New-AzureRmPolicyDefinition -Name '01RestrictVmSelectPolicy' `
+	-Description 'Restrict VM Selections' -Policy 'HDCS\Policies\01RestrictVmSelect.json'
+	New-AzureRmPolicyAssignment -Name '01RestrictVmSelectPolicy' -Scope $subId -PolicyDefinition $policy
 }
 
 function GetListOfPolicyDefinitions{
@@ -31,10 +31,9 @@ function GetListOfPolicyDefinitions{
 	{$_.Properties.description} #| Export-Csv -Path C:\vs\azure\policies.csv
 }
 
-
 function CleanUp(){
 	"REMOVING POLICY ASSIGNMENTS"
-	Remove-AzureRmPolicyDefinition -Name '01RestrictVmSelectPolicy' -Force
+	Remove-AzureRmPolicyDefinition -Name '02RestrictVmSelectPolicy' -Force
 }
 #endregion
 

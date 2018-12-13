@@ -93,7 +93,7 @@ function CleanUp(){
 # Step 1. Create Resource Groups
 CreateResourceGroups
 # Step 2. Create Vnets in Network Resource Group
-CreateVnets
+#CreateVnets
 #CleanUp
 "SCRIPT COMPLETE"
 #endregion

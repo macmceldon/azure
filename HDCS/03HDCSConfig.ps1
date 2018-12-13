@@ -1,7 +1,7 @@
 <#
-    HDCS Operational Lab Environment
-	Create Action Alert Group
-	Create Action Alert 
+	HDCS Operational Lab Environment
+	Deploy & Configure Metrics Logging & Alerting
+	Deploy Log Analytics Workspace
 #>
 Clear-Host
 #region ## PARAMS ##

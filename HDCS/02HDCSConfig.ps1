@@ -1,6 +1,6 @@
 <#
     HDCS Operational Lab Environment
-	Deploy HDCS Baseline Resources
+	Deploy Storage Resources
 #>
 Clear-Host
 #region ## PARAMS ##

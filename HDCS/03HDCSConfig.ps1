@@ -1,15 +1,17 @@
 <#
-	HDCS Operational Lab Environment
-	Deploy & Configure Metrics Logging & Alerting
-	Deploy Log Analytics Workspace
+    .DESCRIPTION
+        HDCS script to deploy Deploy & Configure Metrics Logging & Alerting resources
+    .NOTES
+        AUTHOR:
+        LASTEDIT:
 #>
 Clear-Host
 #region ## PARAMS ##
 	Clear-Host
 	$location = 'eastus2'
-	$deployAlertParamFilePath = 'MetricsAndLogs\AlertAllVms.params.json'
-	$deployAlertTemplateFilePath = 'MetricsAndLogs\AlertAllVms.json'
-	$deployLogAnalyticsTemplatePath = 'MetricsAndLogs\LogAnalyticsWSpace.json'
+	$deployAlertParamFilePath = 'HDCS\Resources\alerts.params.json'
+	$deployAlertTemplateFilePath = 'HDCS\Resources\alerts.template.json'
+	$deployLogAnalyticsTemplatePath = 'HDCS\Resources\logAnalytics.template.json'
 	$rgHdcs = 'rg-lab-hdcs'
 #endregion
 

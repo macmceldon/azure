@@ -1,6 +1,9 @@
 <#
-    HDCS Operational Lab Environment
-	Deploy Storage Resources
+    .DESCRIPTION
+        HDCS script to deploy storage accounts and utility resources
+    .NOTES
+        AUTHOR:
+        LASTEDIT:
 #>
 Clear-Host
 #region ## PARAMS ##

@@ -1,6 +1,9 @@
 <#
-    HDCS Operational Lab Environment
-	Deploy Resource Groups & Virtual Networks
+    .DESCRIPTION
+        HDCS script to mock up an environment handed over after provisioning
+    .NOTES
+        AUTHOR:
+        LASTEDIT:
 #>
 Clear-Host
 #region ## PARAMS ##
@@ -93,7 +96,7 @@ function CleanUp(){
 # Step 1. Create Resource Groups
 CreateResourceGroups
 # Step 2. Create Vnets in Network Resource Group
-#CreateVnets
+CreateVnets
 #CleanUp
 "SCRIPT COMPLETE"
 #endregion

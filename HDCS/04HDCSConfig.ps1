@@ -1,8 +1,13 @@
 <#
-    HDCS Operational Lab Environment
-	Deploy Policies
-	 #https://docs.microsoft.com/en-us/azure/governance/policy/assign-policy-powershell
-	 #https://docs.microsoft.com/en-us/powershell/module/azurerm.resources/new-azurermpolicydefinition?view=azurermps-6.13.0
+    .DESCRIPTION
+        HDCS script to deploy Deploy & Configure Policies
+        AUTHOR:
+		LASTEDIT:
+	.NOTES
+        AUTHOR:
+		LASTEDIT:
+		#https://docs.microsoft.com/en-us/azure/governance/policy/assign-policy-powershell
+	 	#https://docs.microsoft.com/en-us/powershell/module/azurerm.resources/new-azurermpolicydefinition?view=azurermps-6.13.0
 #>
 Clear-Host
 #region ## PARAMS ##
@@ -20,9 +25,16 @@ function AssignPolicyFromExisting{
 	-PolicyDefinition $policyDefinition -listOfAllowedSKUs 'Standard_D1','Standard_D2'
 }
 function DefineAndAssignHdcsPolicies{
+	#1 Restrict Vm Selection
 	$policy = New-AzureRmPolicyDefinition -Name '01RestrictVmSelectPolicy' `
 	-Description 'Restrict VM Selections' -Policy 'HDCS\Policies\01RestrictVmSelect.json'
 	New-AzureRmPolicyAssignment -Name '01RestrictVmSelectPolicy' -Scope $subId -PolicyDefinition $policy
+
+	# Restrict deployment locations
+	$allowedLocations = '{ "listOfAllowedLocations": { "value": [ "eastus2", "westus" ] } }'
+	$policy = Get-AzureRmPolicyDefinition -Id '/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c'
+	New-AzureRmPolicyAssignment -Name '02RestrictDeploymentLocation' `
+	-PolicyDefinition $policy -PolicyParameter $allowedLocations -Scope $subId
 }
 
 function GetListOfPolicyDefinitions{
@@ -42,6 +54,6 @@ function CleanUp(){
 # Step 1. Create Action Group
 #DeployPolicies
 #CleanUp
-DefineHdcsPolicies
+DefineAndAssignHdcsPolicies
 "SCRIPT COMPLETE"
 #endregion

@@ -47,8 +47,10 @@ function CleanUp(){
 	"REMOVING POLICY ASSIGNMENTS"
 	Remove-AzureRmPolicyDefinition -Name '02RestrictVmSelectPolicy' -Force
 }
+function GetRoleDefinitions(){
+	Get-AzureRmRoleDefinition | Export-Csv -Path C:\vs\azure\roledefs.csv
+}
 #endregion
-
 #region ## EXECUTION ##
 "SCRIPT START"
 # Step 1. Create Action Group

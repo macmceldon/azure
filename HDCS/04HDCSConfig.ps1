@@ -45,7 +45,8 @@ function GetListOfPolicyDefinitions{
 
 function CleanUp(){
 	"REMOVING POLICY ASSIGNMENTS"
-	Remove-AzureRmPolicyDefinition -Name '02RestrictVmSelectPolicy' -Force
+	Remove-AzureRmPolicyAssignment -Name '01RestrictVmSelectPolicy' -Scope $subId
+	Remove-AzureRmPolicyAssignment -Name '02RestrictDeploymentLocation' -Scope $subId
 }
 function GetRoleDefinitions(){
 	Get-AzureRmRoleDefinition | Export-Csv -Path C:\vs\azure\roledefs.csv
@@ -55,7 +56,7 @@ function GetRoleDefinitions(){
 "SCRIPT START"
 # Step 1. Create Action Group
 #DeployPolicies
-#CleanUp
-DefineAndAssignHdcsPolicies
+CleanUp
+#DefineAndAssignHdcsPolicies
 "SCRIPT COMPLETE"
 #endregion

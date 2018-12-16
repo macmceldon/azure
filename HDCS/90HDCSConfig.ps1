@@ -23,7 +23,7 @@ function CreateVm(){
 
 	$backupItemName = 'vm;iaasvmcontainerv2;' + $rgTarget + ';' + $vmName
 
- 	Test-AzureRmResourceGroupDeployment -ResourceGroupName $rgTarget `
+ 	New-AzureRmResourceGroupDeployment -ResourceGroupName $rgTarget `
 	-TemplateFile $deployVmTemplateFilePath -TemplateParameterFile $deployVmParamFilePath `
 	-adminPassword $securePassword -virtualMachineName $vmName `
 	-networkInterfaceName $ipSuffix -backupItemName $backupItemName

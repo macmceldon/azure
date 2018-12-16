@@ -5,12 +5,12 @@
 Clear-Host
 #region ## PARAMS ##
 	Clear-Host
-	$deployVmParamFilePath = 'HDCS\Resources\rhel.params.json'
-	$deployVmTemplateFilePath = 'HDCS\Resources\rhel.template.json'
+	$deployVmParamFilePath = 'HDCS\Resources\win.params.json'
+	$deployVmTemplateFilePath = 'HDCS\Resources\win.template.json'
 	$vnetTarget = 'vnet-lab-dev'
     $rgNet = 'rg-lab-net'
 	$rgTarget = 'rg-lab-dev'
-	$vmName = 'rhel-10'
+	$vmName = 'win-01'
 #endregion
 
 #region ## FUNCTIONS ##

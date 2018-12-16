@@ -6,7 +6,7 @@
             "value": "eastus2"
         },
         "networkInterfaceName": {
-            "value": "win-01699"
+            "value": "win-01175"
         },
         "subnetName": {
             "value": "snet-frontend"
@@ -31,6 +31,24 @@
         },
         "adminPassword": {
             "value": null
+        },
+        "backupVaultName": {
+            "value": "hdcsRSVault"
+        },
+        "backupFabricName": {
+            "value": "Azure"
+        },
+        "backupVaultRGName": {
+            "value": "rg-lab-hdcs"
+        },
+        "backupVaultRGIsNew": {
+            "value": false
+        },
+        "backupPolicyName": {
+            "value": "DefaultPolicy"
+        },
+        "backupItemName": {
+            "value": "vm;iaasvmcontainerv2;rg-lab-dev;win-01"
         }
     }
 }

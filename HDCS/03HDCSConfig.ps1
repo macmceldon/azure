@@ -35,10 +35,26 @@ function DeployLogAnalyticsWorkspace(){
 	-TemplateFile $deployLogAnalyticsTemplatePath -workspaceName 'hdcsAnalytics'
 }
 function DeployRecoveryServicesVault(){
+
+	# Daily Backup 1700 UTC 42 Day Retention
 	"Deploying Recovery Services Vault to " + $rgHdcs
-	$rsVault = New-AzureRmRecoveryServicesVault -Name 'hdcsRSVault' `
-	-ResourceGroupName $rgHdcs -Location $location
-	Set-AzureRmRecoveryServicesBackupProperties -Vault $rsVault -BackupStorageRedundancy LocallyRedundant
+	$rsVault = Get-AzureRmRecoveryServicesVault -Name 'hdcsRSVault' -ResourceGroupName 'rg-lab-hdcs' -ErrorAction SilentlyContinue
+	if(!$rsVault){
+		$rsVault = New-AzureRmRecoveryServicesVault -Name 'hdcsRSVault' `
+		-ResourceGroupName $rgHdcs -Location $location
+		# NOTE - Adjust to GeoRedundant to give DR capability (at cost)
+		Set-AzureRmRecoveryServicesBackupProperties -Vault $rsVault -BackupStorageRedundancy LocallyRedundant
+	}
+	Set-AzureRmRecoveryServicesVaultContext -Vault $rsVault
+	
+	#Adjust default policy to 42 days
+	$RetPol = Get-AzureRmRecoveryServicesBackupRetentionPolicyObject -WorkloadType "AzureVM"
+	$RetPol.IsWeeklyScheduleEnabled = $false
+	$RetPol.IsMonthlyScheduleEnabled = $false
+	$RetPol.IsYearlyScheduleEnabled = $false
+	$RetPol.DailySchedule.DurationCountInDays = 42
+	$Pol = Get-AzureRmRecoveryServicesBackupProtectionPolicy -Name "DefaultPolicy"
+	Set-AzureRmRecoveryServicesBackupProtectionPolicy -Policy $Pol -RetentionPolicy $RetPol
 }
 
 function CleanUp(){
@@ -49,11 +65,11 @@ function CleanUp(){
 #region ## EXECUTION ##
 "SCRIPT START"
 # Step 1. Create Action Group
-CreateActionGroup
+#CreateActionGroup
 # Step 2. Create Alert Rule
 # CreateAlertRuleForSubscription
 # Step 3. Deploy Log Analytics Workspace
-DeployLogAnalyticsWorkspace
+#DeployLogAnalyticsWorkspace
 # Step 4. Deploy Recovery Services Vault
 DeployRecoveryServicesVault
 #CleanUp

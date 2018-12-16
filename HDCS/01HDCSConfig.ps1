@@ -94,9 +94,9 @@ function CleanUp(){
 #region ## EXECUTION ##
 "SCRIPT START"
 # Step 1. Create Resource Groups
-#CreateResourceGroups
+CreateResourceGroups
 # Step 2. Create Vnets in Network Resource Group
 #CreateVnets
-CleanUp
+#CleanUp
 "SCRIPT COMPLETE"
 #endregion

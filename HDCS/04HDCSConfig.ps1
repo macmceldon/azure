@@ -25,6 +25,7 @@ function AssignPolicyFromExisting{
 	-PolicyDefinition $policyDefinition -listOfAllowedSKUs 'Standard_D1','Standard_D2'
 }
 function DefineAndAssignHdcsPolicies{
+	
 	#1 Restrict Vm Selection
 	$policy = New-AzureRmPolicyDefinition -Name '01RestrictVmSelectPolicy' `
 	-Description 'Restrict VM Selections' -Policy 'HDCS\Policies\01RestrictVmSelect.json'
@@ -33,8 +34,24 @@ function DefineAndAssignHdcsPolicies{
 	# Restrict deployment locations
 	$allowedLocations = '{ "listOfAllowedLocations": { "value": [ "eastus2", "westus" ] } }'
 	$policy = Get-AzureRmPolicyDefinition -Id '/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c'
-	New-AzureRmPolicyAssignment -Name '02RestrictDeploymentLocation' `
-	-PolicyDefinition $policy -PolicyParameter $allowedLocations -Scope $subId
+	New-AzureRmPolicyAssignment -Name '02RestrictDeploymentLocation' -PolicyParameter $allowedLocations `
+	-PolicyDefinition $policy -Scope $subId 
+
+	# Enforce Storage Account Encryption
+	$policy = Get-AzureRmPolicyDefinition -Id '/providers/Microsoft.Authorization/policyDefinitions/7c5a74bf-ae94-4a74-8fcf-644d1e0e6e6f'
+	New-AzureRmPolicyAssignment -Name '03EnforceStorageAccountEncryption' `
+	-PolicyDefinition $policy -Scope $subId
+	
+	# Enforce Managed Disk Usage
+	$policy = New-AzureRmPolicyDefinition -Name '04EnforceUseOfManagedDisks' `
+	-Description 'Restrict VM Selections' -Policy 'HDCS\Policies\02EnforceUseOfManagedDisks.json'
+	New-AzureRmPolicyAssignment -Name '04EnforceUseOfManagedDisks' -Scope $subId -PolicyDefinition $policy
+	$policy = $null
+	
+	# Enforce Tag Usage
+	$policy = New-AzureRmPolicyDefinition -Name '05EnforceTagUsage' `
+	-Description 'Restrict VM Selections' -Policy 'HDCS\Policies\05EnforceTagUsage.json'
+	New-AzureRmPolicyAssignment -Name '05EnforceTagUsage' -Scope $subId -PolicyDefinition $policy
 }
 
 function GetListOfPolicyDefinitions{
@@ -56,7 +73,7 @@ function GetRoleDefinitions(){
 "SCRIPT START"
 # Step 1. Create Action Group
 #DeployPolicies
-CleanUp
-#DefineAndAssignHdcsPolicies
+#CleanUp
+DefineAndAssignHdcsPolicies
 "SCRIPT COMPLETE"
 #endregion

@@ -14,12 +14,6 @@
         "virtualNetworkId": {
             "value": "/subscriptions/8e2b803f-ef35-4093-97e0-b190a9680de3/resourceGroups/rg-lab-net/providers/Microsoft.Network/virtualNetworks/vnet-lab-dev"
         },
-        "virtualMachineName": {
-            "value": "win-01"
-        },
-        "virtualMachineRG": {
-            "value": "rg-lab-dev"
-        },
         "osDiskType": {
             "value": "Premium_LRS"
         },
@@ -28,9 +22,6 @@
         },
         "adminUsername": {
             "value": "mceldon"
-        },
-        "adminPassword": {
-            "value": null
         },
         "backupVaultName": {
             "value": "hdcsRSVault"

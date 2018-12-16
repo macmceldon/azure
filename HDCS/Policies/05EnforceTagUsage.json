@@ -1,0 +1,19 @@
+{
+    "if": {
+        "anyOf": [{
+                "not": {
+                    "field": "tags",
+                    "containsKey": "CATIId"
+                }
+            },{
+                "not": {
+                    "field": "tags",
+                    "containsKey": "ICTO"
+                }
+            }
+        ]
+    },
+        "then": {
+            "effect": "deny"
+        }
+}

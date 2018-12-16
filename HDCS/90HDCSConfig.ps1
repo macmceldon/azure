@@ -9,8 +9,8 @@ Clear-Host
 	$deployVmTemplateFilePath = 'HDCS\Resources\win.template.json'
 	$vnetTarget = 'vnet-lab-dev'
     $rgNet = 'rg-lab-net'
-	$rgTarget = 'rg-lab-dev'
-	$vmName = 'win-01'
+	$rgTarget = 'rg-lab-prod'
+	$vmName = 'rhel-88'
 #endregion
 
 #region ## FUNCTIONS ##
@@ -25,7 +25,7 @@ function CreateVm(){
 
  	New-AzureRmResourceGroupDeployment -ResourceGroupName $rgTarget `
 	-TemplateFile $deployVmTemplateFilePath -TemplateParameterFile $deployVmParamFilePath `
-	-adminPassword $securePassword -virtualMachineName $vmName `
+	-adminPassword $securePassword -virtualMachineName $vmName -virtualMachineRG $rgTarget `
 	-networkInterfaceName $ipSuffix -backupItemName $backupItemName
 }
 

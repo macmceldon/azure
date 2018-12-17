@@ -13,6 +13,8 @@ Clear-Host
 	$deployAlertTemplateFilePath = 'HDCS\Resources\alerts.template.json'
 	$deployLogAnalyticsTemplatePath = 'HDCS\Resources\logAnalytics.template.json'
 	$rgHdcs = 'rg-lab-hdcs'
+	
+	$tags = @{'SCOPE' = 'HDCS'; 'CATI-ID' = 'CATI-XYZ'}
 #endregion
 
 #region ## FUNCTIONS ##
@@ -65,13 +67,13 @@ function CleanUp(){
 #region ## EXECUTION ##
 "SCRIPT START"
 # Step 1. Create Action Group
-#CreateActionGroup
+CreateActionGroup
 # Step 2. Create Alert Rule
 # CreateAlertRuleForSubscription
 # Step 3. Deploy Log Analytics Workspace
 #DeployLogAnalyticsWorkspace
 # Step 4. Deploy Recovery Services Vault
-DeployRecoveryServicesVault
+#DeployRecoveryServicesVault
 #CleanUp
 "SCRIPT COMPLETE"
 #endregion

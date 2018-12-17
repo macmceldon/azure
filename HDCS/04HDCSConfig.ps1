@@ -32,7 +32,7 @@ function DefineAndAssignHdcsPolicies{
 	New-AzureRmPolicyAssignment -Name '01RestrictVmSelectPolicy' -Scope $subId -PolicyDefinition $policy
 
 	# Restrict deployment locations
-	$allowedLocations = '{ "listOfAllowedLocations": { "value": [ "eastus2", "westus" ] } }'
+	$allowedLocations = '{ "listOfAllowedLocations": { "value": [ "eastus2", "westus", "eastus" ] } }'
 	$policy = Get-AzureRmPolicyDefinition -Id '/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c'
 	New-AzureRmPolicyAssignment -Name '02RestrictDeploymentLocation' -PolicyParameter $allowedLocations `
 	-PolicyDefinition $policy -Scope $subId 

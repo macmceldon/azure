@@ -3,12 +3,12 @@
         "anyOf": [{
                 "not": {
                     "field": "tags",
-                    "containsKey": "CATIId"
+                    "containsKey": "CATI-ID"
                 }
             },{
                 "not": {
                     "field": "tags",
-                    "containsKey": "ICTO"
+                    "containsKey": "SCOPE"
                 }
             }
         ]

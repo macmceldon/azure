@@ -76,7 +76,8 @@
                 ]
             },
             "tags": {
-                "mytag": "12345"
+                "SCOPE": "HDCS",
+                "CATI-ID": "CATI-XYZ"
             }
         },
         {
@@ -124,7 +125,8 @@
                 "licenseType": "Windows_Server"
             },
             "tags": {
-                "mytag": "12345"
+                "SCOPE": "HDCS",
+                "CATI-ID": "CATI-XYZ"
             }
         },
         {

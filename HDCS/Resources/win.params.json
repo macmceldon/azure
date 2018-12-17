@@ -18,7 +18,7 @@
             "value": "Premium_LRS"
         },
         "virtualMachineSize": {
-            "value": "Standard_DS1_v2"
+            "value": "Standard_B1s"
         },
         "adminUsername": {
             "value": "mceldon"

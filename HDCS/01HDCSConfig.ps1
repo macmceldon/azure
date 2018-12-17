@@ -18,6 +18,8 @@ Clear-Host
 	$vnetUat = 'vnet-lab-uat'
 	$vnetDev = 'vnet-lab-dev'
 	$vnetProd = 'vnet-lab-prod'
+	
+	$tags = @{'SCOPE' = 'HDCS'; 'CATI-ID' = 'CATI-XYZ'}
 #endregion
 
 #region ## FUNCTIONS ##
@@ -35,7 +37,7 @@ function CreateResourceGroups() {
 		else
 		{
 			"Creating RG: " + $rg 
-			New-AzureRmResourceGroup -Name $rg -Location $location 
+			New-AzureRmResourceGroup -Name $rg -Location $location -Tag $tags
 		}
 	}
 }
@@ -43,7 +45,7 @@ function CreateVnets(){
 
 	# UAT #
 	$newVnet = New-AzureRmVirtualNetwork -ResourceGroupName $rgNet -Location $location `
-	-Name $vnetUat -AddressPrefix 10.10.0.0/16 -ErrorVariable $e -ErrorAction Stop	
+	-Name $vnetUat -AddressPrefix 10.10.0.0/16 -Tag $tags -ErrorVariable $e -ErrorAction Stop	
 	if($newVnet)
 	{
 		"Creating UAT"
@@ -54,7 +56,7 @@ function CreateVnets(){
 	
 	## DEV #
 	$newVnet = New-AzureRmVirtualNetwork -ResourceGroupName $rgNet -Location $location `
-	-Name $vnetDev -AddressPrefix 10.20.0.0/16
+	-Name $vnetDev -AddressPrefix 10.20.0.0/16 -Tag $tags
 	if($newVnet)
 	{		
 		"Creating DEV"
@@ -65,7 +67,7 @@ function CreateVnets(){
 
 	## PROD #
 	$newVnet = New-AzureRmVirtualNetwork -ResourceGroupName $rgNet -Location $location `
-	-Name $vnetProd -AddressPrefix 10.30.0.0/16
+	-Name $vnetProd -AddressPrefix 10.30.0.0/16 -Tag $tags
 	if($newVnet)
 	{		
 		"Creating PROD"
@@ -94,9 +96,9 @@ function CleanUp(){
 #region ## EXECUTION ##
 "SCRIPT START"
 # Step 1. Create Resource Groups
-CreateResourceGroups
+#CreateResourceGroups
 # Step 2. Create Vnets in Network Resource Group
-#CreateVnets
+CreateVnets
 #CleanUp
 "SCRIPT COMPLETE"
 #endregion

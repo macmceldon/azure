@@ -76,8 +76,8 @@
                 ]
             },
             "tags": {
-                "ICTO": "123456",
-                "CUSTOMTAG": "IAMATAG"
+                "SCOPE": "HDCS",
+                "CATI-ID": "CATI-XYZ"
             }
         },
         {
@@ -120,8 +120,8 @@
                 }
             },
             "tags": {
-                "ICTO": "123456",
-                "CUSTOMTAG": "IAMATAG"
+                "SCOPE": "HDCS",
+                "CATI-ID": "CATI-XYZ"
             }
         },
         {

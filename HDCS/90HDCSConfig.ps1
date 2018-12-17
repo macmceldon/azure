@@ -9,8 +9,9 @@ Clear-Host
 	$deployVmTemplateFilePath = 'HDCS\Resources\win.template.json'
 	$vnetTarget = 'vnet-lab-dev'
     $rgNet = 'rg-lab-net'
-	$rgTarget = 'rg-lab-prod'
-	$vmName = 'rhel-88'
+	$rgTarget = 'rg-lab-dev'
+	$vmName = 'win-01'
+	$tags = @{'SCOPE' = 'HDCS'; 'CATI-ID' = 'CATI-XYZ'}
 #endregion
 
 #region ## FUNCTIONS ##

@@ -10,7 +10,8 @@ Clear-Host
 	Clear-Host
 	$location = 'eastus2'
 	$rgHdcs = 'rg-lab-hdcs'
-	$storHdcs = 'storlabhdcs01'
+    $storHdcs = 'storlabhdcs01'    
+	$tags = @{'SCOPE' = 'HDCS'; 'CATI-ID' = 'CATI-XYZ'}
 #endregion
 
 #region ## FUNCTIONS ##
@@ -25,6 +26,7 @@ function CreateStorageAccounts(){
         -Name $storHdcs `
         -Location $location `
         -SkuName Standard_LRS `
+        -Tag $tags `
         -Kind Storage -ErrorAction SilentlyContinue
 
         $ctx = $storageAccount.Context
